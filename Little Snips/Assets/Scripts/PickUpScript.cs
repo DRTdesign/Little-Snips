@@ -81,6 +81,8 @@ public class PickUpScript : MonoBehaviour
     {
         if (pickUpObj.GetComponent<Rigidbody>()) //make sure the object has a RigidBody
         {
+            handR.GetComponent<Animator>();
+            anim.SetTrigger("CloseHandR");
             heldObj = pickUpObj; //assign heldObj to the object that was hit by the raycast (no longer == null)
             heldObjRb = pickUpObj.GetComponent<Rigidbody>(); //assign Rigidbody
             heldObjRb.isKinematic = true;
@@ -88,22 +90,23 @@ public class PickUpScript : MonoBehaviour
             //heldObj.layer = LayerNumber; //change the object layer to the holdLayer
             //make sure object doesnt collide with player, it can cause weird bugs
             Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), true);
-            handR.GetComponent<Animator>(); 
-            anim.SetTrigger("CloseHandR");
         }
     }
 
     void DropObject()
     {
-        //re-enable collision with player
-        Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
-        //heldObj.layer = 0; //object assigned back to default layer
-        heldObjRb.isKinematic = false;
-        heldObj.transform.parent = null; //unparent object
-        heldObj = null; //undefine game object
-        objectScaleDownReady = true;
-        //ScaleObjectUp();
-        anim.SetTrigger("OpenHandR");
+        if (GameObject.Find("MainCamera").GetComponent<HandPosition>().lookingAt == true)
+        {
+            //re-enable collision with player
+            Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
+            //heldObj.layer = 0; //object assigned back to default layer
+            heldObjRb.isKinematic = false;
+            heldObj.transform.parent = null; //unparent object
+            heldObj = null; //undefine game object
+            objectScaleDownReady = true;
+            //ScaleObjectUp();
+            anim.SetTrigger("OpenHandR");
+        }
     }
 
     void MoveObject()
