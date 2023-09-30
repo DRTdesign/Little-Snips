@@ -5,6 +5,8 @@ using UnityEngine;
 public class PickUpScript : MonoBehaviour
 {
     public GameObject player;
+    public GameObject handR;
+    private Animator anim;
     public Transform holdPosR;
     public Transform holdPosL;
     //if you copy from below this point, you are legally required to like the video
@@ -28,6 +30,8 @@ public class PickUpScript : MonoBehaviour
         //mouseLookScript = player.GetComponent<MouseLookScript>();
 
         objectScaleDownReady = true;
+
+        anim = handR.GetComponent<Animator>();
     }
 
     void Update()
@@ -84,6 +88,8 @@ public class PickUpScript : MonoBehaviour
             //heldObj.layer = LayerNumber; //change the object layer to the holdLayer
             //make sure object doesnt collide with player, it can cause weird bugs
             Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), true);
+            handR.GetComponent<Animator>(); 
+            anim.SetTrigger("CloseHandR");
         }
     }
 
@@ -97,6 +103,7 @@ public class PickUpScript : MonoBehaviour
         heldObj = null; //undefine game object
         objectScaleDownReady = true;
         //ScaleObjectUp();
+        anim.SetTrigger("OpenHandR");
     }
 
     void MoveObject()
