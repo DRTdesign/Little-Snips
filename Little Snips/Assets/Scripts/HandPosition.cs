@@ -7,25 +7,23 @@ public class HandPosition : MonoBehaviour
     public GameObject rightHand;
     public GameObject leftHand;
     public Transform handRestPositionR;
-    public Transform handRestPositionL;
     public Transform handRestRotationR;
+    public Transform handRestPositionL;
     public Transform handRestRotationL;
+    public Transform handGrabPositionR;
+    public Transform handGrabRotationR;
+    public Transform handGrabPositionL;
+    public Transform handGrabRotationL;
     public Transform boxPlaceHand1;
     public Transform boxPlaceHand2;
     public Transform boxPlaceHand3;
     public float lookAtRange = 5f; //how far the player can pickup the object from
     public bool lookingAt;
-    public bool overBox1;
-    public bool overBox2;
-    public bool overBox3;
 
     // Start is called before the first frame update
     void Start()
     {
         lookingAt = false;
-        overBox1 = false;
-        overBox2 = false;
-        overBox3 = false;
     }
 
     // Update is called once per frame
@@ -41,21 +39,18 @@ public class HandPosition : MonoBehaviour
             {
                 LookAtObject1(hit.transform.gameObject);
                 lookingAt = true;
-                overBox1 = true;
             }
 
             else if (hit.transform.gameObject.tag == "boxLookAt2")
             {
                 LookAtObject2(hit.transform.gameObject);
                 lookingAt = true;
-                overBox2 = true;
             }
 
             else if (hit.transform.gameObject.tag == "boxLookAt3")
             {
                 LookAtObject3(hit.transform.gameObject);
                 lookingAt = true;
-                overBox3 = true;
             }
 
             //if inside the Raycast if statement, only the last box in the list works
@@ -71,9 +66,13 @@ public class HandPosition : MonoBehaviour
         {
             rightHand.transform.position = handRestPositionR.transform.position;
             rightHand.transform.rotation = handRestPositionR.transform.rotation;
-            overBox1 = false;
-            overBox2 = false;
-            overBox3 = false;
+        }
+
+
+        if (GameObject.Find("MainCamera").GetComponent<PickUpScript>().readyToPickUp == true)
+        {
+            rightHand.transform.position = handGrabPositionR.transform.position;
+            rightHand.transform.rotation = handGrabPositionR.transform.rotation;
         }
     }
 

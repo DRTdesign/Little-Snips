@@ -18,6 +18,7 @@ public class PickUpScript : MonoBehaviour
     private bool canDrop = true; //this is needed so we don't throw/drop object when rotating the object
     private int LayerNumber; //layer index
     private bool objectScaleDownReady = true;
+    public bool readyToPickUp = false;
 
     //Reference to script which includes mouse movement of player (looking around)
     //we want to disable the player looking around when rotating the object
@@ -36,31 +37,43 @@ public class PickUpScript : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) //Left mouse click
+        //perform raycast to check if player is looking at object within pickuprange
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, pickUpRange))
         {
             if (heldObj == null) //if currently not holding anything
             {
-                //perform raycast to check if player is looking at object within pickuprange
-                RaycastHit hit;
-                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, pickUpRange))
+                //make sure pickup tag is attached
+                if (hit.transform.gameObject.tag == "canPickUp")
                 {
-                    //make sure pickup tag is attached
-                    if (hit.transform.gameObject.tag == "canPickUp")
+                    readyToPickUp = true;
+
+                    if (Input.GetMouseButtonDown(0)) //Left mouse click
                     {
                         //pass in object hit into the PickUpObject function
                         PickUpObject(hit.transform.gameObject);
                     }
+
                 }
-            }
-            else
-            {
-                if (canDrop == true)
+
+                else
                 {
-                    StopClipping(); //prevents object from clipping through walls
-                    DropObject();
+                    readyToPickUp = false;
                 }
             }
         }
+
+        else
+        {
+            readyToPickUp = false;
+
+            if (canDrop == true)
+            {
+                //StopClipping(); //prevents object from clipping through walls
+                DropObject();
+            }
+        }
+
         if (heldObj != null) //if player is holding object
         {
             heldObj.layer = LayerMask.NameToLayer("Ignore Raycast");
@@ -165,19 +178,19 @@ public class PickUpScript : MonoBehaviour
     //    objectScaleDownReady = true;
     //}
 
-    void StopClipping() //function only called when dropping/throwing
-    {
-        var clipRange = Vector3.Distance(heldObj.transform.position, transform.position); //distance from holdPos to the camera
-        //have to use RaycastAll as object blocks raycast in center screen
-        //RaycastAll returns array of all colliders hit within the cliprange
-        RaycastHit[] hits;
-        hits = Physics.RaycastAll(transform.position, transform.TransformDirection(Vector3.forward), clipRange);
-        //if the array length is greater than 1, meaning it has hit more than just the object we are carrying
-        if (hits.Length > 1)
-        {
-            //change object position to camera position 
-            heldObj.transform.position = transform.position + new Vector3(0f, -0.5f, 0f); //offset slightly downward to stop object dropping above player 
-            //if your player is small, change the -0.5f to a smaller number (in magnitude) ie: -0.1f
-        }
-    }
+    //void StopClipping() //function only called when dropping/throwing
+    //{
+    //    var clipRange = Vector3.Distance(heldObj.transform.position, transform.position); //distance from holdPos to the camera
+    //    //have to use RaycastAll as object blocks raycast in center screen
+    //    //RaycastAll returns array of all colliders hit within the cliprange
+    //    RaycastHit[] hits;
+    //    hits = Physics.RaycastAll(transform.position, transform.TransformDirection(Vector3.forward), clipRange);
+    //    //if the array length is greater than 1, meaning it has hit more than just the object we are carrying
+    //    if (hits.Length > 1)
+    //    {
+    //        //change object position to camera position 
+    //        heldObj.transform.position = transform.position + new Vector3(0f, -0.5f, 0f); //offset slightly downward to stop object dropping above player 
+    //        //if your player is small, change the -0.5f to a smaller number (in magnitude) ie: -0.1f
+    //    }
+    //}
 }
