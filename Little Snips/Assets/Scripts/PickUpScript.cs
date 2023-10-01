@@ -36,7 +36,7 @@ public class PickUpScript : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) //change E to whichever key you want to press to pick up
+        if (Input.GetMouseButtonDown(0)) //Left mouse click
         {
             if (heldObj == null) //if currently not holding anything
             {
@@ -63,13 +63,14 @@ public class PickUpScript : MonoBehaviour
         }
         if (heldObj != null) //if player is holding object
         {
+            heldObj.layer = LayerMask.NameToLayer("Ignore Raycast");
             MoveObject(); //keep object position at holdPosR
             //RotateObject();
-            if (Input.GetMouseButtonDown(1) && canDrop == true) //Mous0 (leftclick) is used to throw, change this if you want another button to be used)
-            {
-                StopClipping();
-                //ThrowObject(); << TO TURN OBJECT THORWING BACK ON
-            }
+            //if (Input.GetMouseButtonDown(1) && canDrop == true) //Right click to throw
+            //{
+            //    StopClipping();
+            //    //ThrowObject(); << TO TURN OBJECT THORWING BACK ON
+            //}
             if (objectScaleDownReady == true)
             {
                 ScaleObjectDown();
@@ -152,17 +153,17 @@ public class PickUpScript : MonoBehaviour
     //    }
     //}
 
-    void ThrowObject()
-    {
-        //same as drop function, but add force to object before undefining it
-        Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
-        //heldObj.layer = 0;
-        heldObjRb.isKinematic = false;
-        heldObj.transform.parent = null;
-        heldObjRb.AddForce(transform.forward * throwForce);
-        heldObj = null;
-        objectScaleDownReady = true;
-    }
+    //void ThrowObject()
+    //{
+    //    //same as drop function, but add force to object before undefining it
+    //    Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
+    //    //heldObj.layer = 0;
+    //    heldObjRb.isKinematic = false;
+    //    heldObj.transform.parent = null;
+    //    heldObjRb.AddForce(transform.forward * throwForce);
+    //    heldObj = null;
+    //    objectScaleDownReady = true;
+    //}
 
     void StopClipping() //function only called when dropping/throwing
     {

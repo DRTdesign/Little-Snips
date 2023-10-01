@@ -12,6 +12,7 @@ TagManager:
   - boxLookAt1
   - boxLookAt2
   - boxLookAt3
+  - pickedUp
   layers:
   - Default
   - TransparentFX

@@ -15,17 +15,23 @@ public class HandPosition : MonoBehaviour
     public Transform boxPlaceHand3;
     public float lookAtRange = 5f; //how far the player can pickup the object from
     public bool lookingAt;
+    public bool overBox1;
+    public bool overBox2;
+    public bool overBox3;
 
     // Start is called before the first frame update
     void Start()
     {
         lookingAt = false;
+        overBox1 = false;
+        overBox2 = false;
+        overBox3 = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        print (lookingAt);
+        //print (lookingAt);
 
         RaycastHit hit;
 
@@ -35,18 +41,21 @@ public class HandPosition : MonoBehaviour
             {
                 LookAtObject1(hit.transform.gameObject);
                 lookingAt = true;
+                overBox1 = true;
             }
 
             else if (hit.transform.gameObject.tag == "boxLookAt2")
             {
                 LookAtObject2(hit.transform.gameObject);
                 lookingAt = true;
+                overBox2 = true;
             }
 
             else if (hit.transform.gameObject.tag == "boxLookAt3")
             {
                 LookAtObject3(hit.transform.gameObject);
                 lookingAt = true;
+                overBox3 = true;
             }
 
             //if inside the Raycast if statement, only the last box in the list works
@@ -62,13 +71,16 @@ public class HandPosition : MonoBehaviour
         {
             rightHand.transform.position = handRestPositionR.transform.position;
             rightHand.transform.rotation = handRestPositionR.transform.rotation;
+            overBox1 = false;
+            overBox2 = false;
+            overBox3 = false;
         }
     }
 
     void LookAtObject1(GameObject pickUpObj)
     {
         rightHand.transform.position = boxPlaceHand1.transform.position;
-        rightHand.transform.rotation = boxPlaceHand1.transform.rotation;        
+        rightHand.transform.rotation = boxPlaceHand1.transform.rotation;
     }
 
     void LookAtObject2(GameObject pickUpObj)

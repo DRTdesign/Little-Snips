@@ -16,7 +16,7 @@ public class scoreUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = "Score: " + ScoreTracker.scoreAmount;
+        scoreText.text = "Earnings: " + ScoreTracker.scoreAmount;
         //scoreText.text = "Obj Spawn: " + SpawnObject.ObjectSpawnPicker;
     }
 }
