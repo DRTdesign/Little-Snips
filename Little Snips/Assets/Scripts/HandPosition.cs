@@ -62,6 +62,11 @@ public class HandPosition : MonoBehaviour
             }
         }
 
+        else
+        {
+            lookingAt = false;
+        }
+
         if (lookingAt == false)
         {
             rightHand.transform.position = handRestPositionR.transform.position;

@@ -9,25 +9,20 @@ public class PickUpScript : MonoBehaviour
     private Animator anim;
     public Transform holdPosR;
     public Transform holdPosL;
-    //if you copy from below this point, you are legally required to like the video
     public float throwForce = 500f; //force at which the object is thrown at
     public float pickUpRange = 5f; //how far the player can pickup the object from
     //private float rotationSensitivity = 1f; //how fast/slow the object is rotated in relation to mouse movement
     private GameObject heldObj; //object which we pick up
     private Rigidbody heldObjRb; //rigidbody of object we pick up
-    private bool canDrop = true; //this is needed so we don't throw/drop object when rotating the object
+    public bool canDrop = true; //this is needed so we don't throw/drop object when rotating the object
     private int LayerNumber; //layer index
     private bool objectScaleDownReady = true;
     public bool readyToPickUp = false;
+    public bool dropTrigger = false;
 
-    //Reference to script which includes mouse movement of player (looking around)
-    //we want to disable the player looking around when rotating the object
-    //example below 
-    //MouseLookScript mouseLookScript;
     void Start()
     {
         //LayerNumber = LayerMask.NameToLayer("holdLayer"); //if your holdLayer is named differently make sure to change this ""
-
         //mouseLookScript = player.GetComponent<MouseLookScript>();
 
         objectScaleDownReady = true;
@@ -69,8 +64,9 @@ public class PickUpScript : MonoBehaviour
 
             if (canDrop == true)
             {
-                //StopClipping(); //prevents object from clipping through walls
-                DropObject();
+                    //dropTrigger = true;
+                    //StopClipping(); //prevents object from clipping through walls
+                    DropObject();               
             }
         }
 
@@ -78,12 +74,19 @@ public class PickUpScript : MonoBehaviour
         {
             heldObj.layer = LayerMask.NameToLayer("Ignore Raycast");
             MoveObject(); //keep object position at holdPosR
+
+            if (Input.GetMouseButtonDown(0) && canDrop == true)
+            {
+                DropObject();
+            }
+
             //RotateObject();
             //if (Input.GetMouseButtonDown(1) && canDrop == true) //Right click to throw
             //{
             //    StopClipping();
             //    //ThrowObject(); << TO TURN OBJECT THORWING BACK ON
             //}
+
             if (objectScaleDownReady == true)
             {
                 ScaleObjectDown();
@@ -109,8 +112,9 @@ public class PickUpScript : MonoBehaviour
 
     void DropObject()
     {
-        if (GameObject.Find("MainCamera").GetComponent<HandPosition>().lookingAt == true)
+        if (this.GetComponent<HandPosition>().lookingAt == true)
         {
+            dropTrigger = true;
             //re-enable collision with player
             Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
             //heldObj.layer = 0; //object assigned back to default layer

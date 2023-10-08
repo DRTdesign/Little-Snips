@@ -19,7 +19,7 @@ public class BoxScript : MonoBehaviour
             if (other.gameObject.name == "Body Part 1(Clone)")
             {
                 Destroy(other.gameObject);
-                ScoreTracker.scoreAmount += 1;
+                ScoreTracker.scoreAmount += ScoreTracker.scoreAdd;
                 ObjectSpawner.GetComponent<SpawnObject>().fireObjectSpawn();
             }
         }
@@ -29,7 +29,7 @@ public class BoxScript : MonoBehaviour
             if (other.gameObject.name != "Body Part 1(Clone)")
             {
                 Destroy(other.gameObject);
-                ScoreTracker.scoreAmount -= 1;
+                ScoreTracker.scoreAmount -= ScoreTracker.scoreSubtract;
                 ObjectSpawner.GetComponent<SpawnObject>().fireObjectSpawn();
             }
         }
@@ -40,7 +40,7 @@ public class BoxScript : MonoBehaviour
             if (other.gameObject.name == "Body Part 2(Clone)")
             {
                 Destroy(other.gameObject);
-                ScoreTracker.scoreAmount += 1;
+                ScoreTracker.scoreAmount += ScoreTracker.scoreAdd;
                 ObjectSpawner.GetComponent<SpawnObject>().fireObjectSpawn();
             }
         }
@@ -50,7 +50,7 @@ public class BoxScript : MonoBehaviour
             if (other.gameObject.name != "Body Part 2(Clone)")
             {
                 Destroy(other.gameObject);
-                ScoreTracker.scoreAmount -= 1;
+                ScoreTracker.scoreAmount -= ScoreTracker.scoreSubtract;
                 ObjectSpawner.GetComponent<SpawnObject>().fireObjectSpawn();
             }
         }
@@ -61,7 +61,7 @@ public class BoxScript : MonoBehaviour
             if (other.gameObject.name == "Body Part 3(Clone)")
             {
                 Destroy(other.gameObject);
-                ScoreTracker.scoreAmount += 1;
+                ScoreTracker.scoreAmount += ScoreTracker.scoreAdd;
                 ObjectSpawner.GetComponent<SpawnObject>().fireObjectSpawn();
             }
         }
@@ -71,7 +71,7 @@ public class BoxScript : MonoBehaviour
             if (other.gameObject.name != "Body Part 3(Clone)")
             {
                 Destroy(other.gameObject);
-                ScoreTracker.scoreAmount -= 1;
+                ScoreTracker.scoreAmount -= ScoreTracker.scoreSubtract;
                 ObjectSpawner.GetComponent<SpawnObject>().fireObjectSpawn();
             }
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class scoreUI : MonoBehaviour
+public class UIScore : MonoBehaviour
 {
     private Text scoreText;
 
@@ -16,7 +16,7 @@ public class scoreUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = "Earnings: " + ScoreTracker.scoreAmount;
+        scoreText.text = "Earnings: $" + ScoreTracker.scoreAmount;
         //scoreText.text = "Obj Spawn: " + SpawnObject.ObjectSpawnPicker;
     }
 }
