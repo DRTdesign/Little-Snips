@@ -29,33 +29,31 @@ public class HandPosition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //print (lookingAt);
-
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, lookAtRange))
         {
-            if (hit.transform.gameObject.tag == "boxLookAt1")
+            if (GameObject.Find("MainCamera").GetComponent<PickUpScript>().holdingObj == true)
             {
-                LookAtObject1(hit.transform.gameObject);
-                lookingAt = true;
+                if (hit.transform.gameObject.tag == "boxLookAt1")
+                {
+                    LookAtObject1(hit.transform.gameObject);
+                    lookingAt = true;
+                }
+
+                else if (hit.transform.gameObject.tag == "boxLookAt2")
+                {
+                    LookAtObject2(hit.transform.gameObject);
+                    lookingAt = true;
+                }
+
+                else if (hit.transform.gameObject.tag == "boxLookAt3")
+                {
+                    LookAtObject3(hit.transform.gameObject);
+                    lookingAt = true;
+                }
             }
 
-            else if (hit.transform.gameObject.tag == "boxLookAt2")
-            {
-                LookAtObject2(hit.transform.gameObject);
-                lookingAt = true;
-            }
-
-            else if (hit.transform.gameObject.tag == "boxLookAt3")
-            {
-                LookAtObject3(hit.transform.gameObject);
-                lookingAt = true;
-            }
-
-            //if inside the Raycast if statement, only the last box in the list works
-            //if outside the Raycast if statement, all boxes work but the hand doesn't return properly
-                //because it's casting a ray and hitting any object (within range)
             else
             {
                 lookingAt = false;

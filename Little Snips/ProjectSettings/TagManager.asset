@@ -13,6 +13,7 @@ TagManager:
   - boxLookAt2
   - boxLookAt3
   - pickedUp
+  - spawner
   layers:
   - Default
   - TransparentFX
