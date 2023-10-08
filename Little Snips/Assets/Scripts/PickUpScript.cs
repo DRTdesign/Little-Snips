@@ -16,16 +16,15 @@ public class PickUpScript : MonoBehaviour
     private Rigidbody heldObjRb; //rigidbody of object we pick up
     public bool canDrop = true; //this is needed so we don't throw/drop object when rotating the object
     private int LayerNumber; //layer index
-    private bool objectScaleDownReady = true;
+    //private bool objectScaleDownReady = true;
     public bool readyToPickUp = false;
-    public bool dropTrigger = false;
 
     void Start()
     {
         //LayerNumber = LayerMask.NameToLayer("holdLayer"); //if your holdLayer is named differently make sure to change this ""
         //mouseLookScript = player.GetComponent<MouseLookScript>();
 
-        objectScaleDownReady = true;
+        //objectScaleDownReady = true;
 
         anim = handR.GetComponent<Animator>();
     }
@@ -48,7 +47,6 @@ public class PickUpScript : MonoBehaviour
                         //pass in object hit into the PickUpObject function
                         PickUpObject(hit.transform.gameObject);
                     }
-
                 }
 
                 else
@@ -66,7 +64,7 @@ public class PickUpScript : MonoBehaviour
             {
                     //dropTrigger = true;
                     //StopClipping(); //prevents object from clipping through walls
-                    DropObject();               
+                    //DropObject();               
             }
         }
 
@@ -87,10 +85,10 @@ public class PickUpScript : MonoBehaviour
             //    //ThrowObject(); << TO TURN OBJECT THORWING BACK ON
             //}
 
-            if (objectScaleDownReady == true)
-            {
-                ScaleObjectDown();
-            }
+            //if (objectScaleDownReady == true)
+            //{
+            //    ScaleObjectDown();
+            //}
         }
     }
 
@@ -98,6 +96,7 @@ public class PickUpScript : MonoBehaviour
     {
         if (pickUpObj.GetComponent<Rigidbody>()) //make sure the object has a RigidBody
         {
+            canDrop = true;
             handR.GetComponent<Animator>();
             anim.SetTrigger("CloseHandR");
             heldObj = pickUpObj; //assign heldObj to the object that was hit by the raycast (no longer == null)
@@ -114,14 +113,13 @@ public class PickUpScript : MonoBehaviour
     {
         if (this.GetComponent<HandPosition>().lookingAt == true)
         {
-            dropTrigger = true;
             //re-enable collision with player
             Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
             //heldObj.layer = 0; //object assigned back to default layer
             heldObjRb.isKinematic = false;
             heldObj.transform.parent = null; //unparent object
             heldObj = null; //undefine game object
-            objectScaleDownReady = true;
+            //objectScaleDownReady = true;
             //ScaleObjectUp();
             anim.SetTrigger("OpenHandR");
         }
@@ -133,11 +131,11 @@ public class PickUpScript : MonoBehaviour
         heldObj.transform.position = holdPosR.transform.position;
     }
 
-    void ScaleObjectDown()
-    {
-        heldObj.transform.localScale = (heldObj.transform.localScale) / 2;
-        objectScaleDownReady = false;
-    }
+    //void ScaleObjectDown()
+    //{
+    //    heldObj.transform.localScale = (heldObj.transform.localScale) / 2;
+    //    objectScaleDownReady = false;
+    //}
 
     //void ScaleObjectUp()
     //{
