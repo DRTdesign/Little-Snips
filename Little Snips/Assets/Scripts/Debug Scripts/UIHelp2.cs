@@ -26,12 +26,12 @@ public class UIHelp2 : MonoBehaviour
 
         if (CanDrop == true)
         {
-            if (MainCamera.GetComponent<PickUpScript>().canDrop == true)
+            if (MainCamera.GetComponent<PickUpObj>().canDropR == true)
             {
                 helpText.text = "CanDrop = True";
             }
 
-            if (MainCamera.GetComponent<PickUpScript>().canDrop != true)
+            if (MainCamera.GetComponent<PickUpObj>().canDropR != true)
             {
                 helpText.text = "CanDrop = False";
             }

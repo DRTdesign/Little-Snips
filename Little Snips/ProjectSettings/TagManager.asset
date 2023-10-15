@@ -14,6 +14,9 @@ TagManager:
   - boxLookAt3
   - pickedUp
   - spawner
+  - tool1
+  - tool2
+  - tool3
   layers:
   - Default
   - TransparentFX

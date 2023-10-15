@@ -2,19 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickUpScript : MonoBehaviour
+public class PickUpObj : MonoBehaviour
 {
     public GameObject player;
     public GameObject handR;
     private Animator anim;
     public Transform holdPosR;
-    public Transform holdPosL;
-    public float throwForce = 500f; //force at which the object is thrown at
+    //public float throwForce = 500f; //force at which the object is thrown at
     public float pickUpRange = 20f; //how far the player can pickup the object from
     //private float rotationSensitivity = 1f; //how fast/slow the object is rotated in relation to mouse movement
     private GameObject heldObj; //object which we pick up
     private Rigidbody heldObjRb; //rigidbody of object we pick up
-    public bool canDrop = true; //this is needed so we don't throw/drop object when rotating the object
+    public bool canDropR = true; //this is needed so we don't throw/drop object when rotating the object
     private int LayerNumber; //layer index
     //private bool objectScaleDownReady = true;
     public bool readyToPickUp = false;
@@ -69,12 +68,12 @@ public class PickUpScript : MonoBehaviour
         {
             readyToPickUp = false;
 
-            if (canDrop == true)
-            {
-                    //dropTrigger = true;
-                    //StopClipping(); //prevents object from clipping through walls
-                    //DropObject();               
-            }
+            //if (canDropR == true)
+            //{
+            //        //dropTrigger = true;
+            //        //StopClipping(); //prevents object from clipping through walls
+            //        //DropObject();               
+            //}
         }
 
         if (heldObj != null) //if player is holding object
@@ -82,13 +81,13 @@ public class PickUpScript : MonoBehaviour
             heldObj.layer = LayerMask.NameToLayer("Ignore Raycast");
             MoveObject(); //keep object position at holdPosR
 
-            if (Input.GetMouseButtonDown(0) && canDrop == true)
+            if (Input.GetMouseButtonDown(0) && canDropR == true)
             {
                 DropObject();
             }
 
             //RotateObject();
-            //if (Input.GetMouseButtonDown(1) && canDrop == true) //Right click to throw
+            //if (Input.GetMouseButtonDown(1) && canDropR == true) //Right click to throw
             //{
             //    StopClipping();
             //    //ThrowObject(); << TO TURN OBJECT THORWING BACK ON
@@ -106,7 +105,7 @@ public class PickUpScript : MonoBehaviour
         if (pickUpObj.GetComponent<Rigidbody>()) //make sure the object has a RigidBody
         {
             holdingObj = true;
-            canDrop = true;
+            canDropR = true;
             //handR.GetComponent<Animator>();
             anim.SetTrigger("CloseHandR");
             heldObj = pickUpObj; //assign heldObj to the object that was hit by the raycast (no longer == null)
@@ -158,7 +157,7 @@ public class PickUpScript : MonoBehaviour
     //{
     //    if (Input.GetKey(KeyCode.R))//hold R key to rotate, change this to whatever key you want
     //    {
-    //        canDrop = false; //make sure throwing can't occur during rotating
+    //        canDropR = false; //make sure throwing can't occur during rotating
 
     //        //disable player being able to look around
     //        //mouseLookScript.verticalSensitivity = 0f;
@@ -175,7 +174,7 @@ public class PickUpScript : MonoBehaviour
     //        //re-enable player being able to look around
     //        //mouseLookScript.verticalSensitivity = originalvalue;
     //        //mouseLookScript.lateralSensitivity = originalvalue;
-    //        canDrop = true;
+    //        canDropR = true;
     //    }
     //}
 

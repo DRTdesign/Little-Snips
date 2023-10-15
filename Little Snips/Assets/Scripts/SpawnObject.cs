@@ -20,7 +20,7 @@ public class SpawnObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameObject.Find("MainCamera").GetComponent<PickUpScript>().spawnButtonLook == true)
+        if (GameObject.Find("MainCamera").GetComponent<PickUpObj>().spawnButtonLook == true)
         {
             if (Input.GetMouseButtonDown(0))
             {

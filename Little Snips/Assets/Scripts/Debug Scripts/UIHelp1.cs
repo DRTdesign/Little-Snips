@@ -26,12 +26,12 @@ public class UIHelp1 : MonoBehaviour
 
         if(ReadyToPickUp == true)
         {
-            if (MainCamera.GetComponent<PickUpScript>().readyToPickUp == true)
+            if (MainCamera.GetComponent<PickUpObj>().readyToPickUp == true)
             {
                 helpText.text = "ReadyToPickUp = True";
             }
 
-            if (MainCamera.GetComponent<PickUpScript>().readyToPickUp != true)
+            if (MainCamera.GetComponent<PickUpObj>().readyToPickUp != true)
             {
                 helpText.text = "ReadyToPickUp = False";
             }
