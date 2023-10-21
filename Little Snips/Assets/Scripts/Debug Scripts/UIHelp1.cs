@@ -7,34 +7,24 @@ public class UIHelp1 : MonoBehaviour
 {
     private Text helpText;
     public GameObject MainCamera;
-    //turn these bools off and on to show text without clashes
-    private bool ReadyToPickUp = true;
-    //private bool CanDrop = false;
-    //private bool LookingAt = false;
 
     // Start is called before the first frame update
     void Start()
     {
         helpText = GetComponent<Text>();
-        //MainCamera = GetComponent<PickUpScript>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //helpText.text = "boop";
-
-        if(ReadyToPickUp == true)
+        if (MainCamera.GetComponent<PickUpTool>().readyToPickUpTool1 == true)
         {
-            if (MainCamera.GetComponent<PickUpObj>().readyToPickUp == true)
-            {
-                helpText.text = "ReadyToPickUp = True";
-            }
+            helpText.text = "ReadyToPickUpTool = True";
+        }
 
-            if (MainCamera.GetComponent<PickUpObj>().readyToPickUp != true)
-            {
-                helpText.text = "ReadyToPickUp = False";
-            }
+        if (MainCamera.GetComponent<PickUpTool>().readyToPickUpTool1 != true)
+        {
+            helpText.text = "ReadyToPickUpTool = False";
         }
     }
 }

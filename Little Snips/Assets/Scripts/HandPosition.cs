@@ -9,24 +9,18 @@ public class HandPosition : MonoBehaviour
 
     //Hands resting positions and rotations
     public Transform handRestPositionR;
-    public Transform handRestRotationR;
     public Transform handRestPositionL;
-    public Transform handRestRotationL;
 
     //Right hand positions and rotations
     public Transform handObjGrabPosition;
-    public Transform handObjGrabRotation;
     public Transform boxPlaceHand1;
     public Transform boxPlaceHand2;
     public Transform boxPlaceHand3;
 
     //Left hand positions and rotations
     public Transform handTool1GrabPosition;
-    public Transform handTool1GrabRotation;
     public Transform handTool2GrabPosition;
-    public Transform handTool2GrabRotation;
     public Transform handTool3GrabPosition;
-    public Transform handTool3GrabRotation;
 
     public float lookAtRange = 5f; //how far the player can pickup the object from
     public bool lookingAt;
@@ -117,9 +111,8 @@ public class HandPosition : MonoBehaviour
             && GameObject.Find("MainCamera").GetComponent<PickUpTool>().readyToPickUpTool3 == false)
         {
             leftHand.transform.position = handRestPositionL.transform.position;
-            leftHand.transform.rotation = handRestRotationL.transform.rotation;
+            leftHand.transform.rotation = handRestPositionL.transform.rotation;
         }
-
     }
 
     void LookAtBox1(GameObject pickUpObj)

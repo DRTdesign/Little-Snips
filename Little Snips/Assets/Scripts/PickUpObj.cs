@@ -106,7 +106,6 @@ public class PickUpObj : MonoBehaviour
         {
             holdingObj = true;
             canDropR = true;
-            //handR.GetComponent<Animator>();
             anim.SetTrigger("CloseHandR");
             heldObj = pickUpObj; //assign heldObj to the object that was hit by the raycast (no longer == null)
             heldObjRb = pickUpObj.GetComponent<Rigidbody>(); //assign Rigidbody
