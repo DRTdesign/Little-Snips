@@ -16,7 +16,7 @@ public class UIScore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = "Earnings $" + ScoreTracker.scoreAmount;
+        scoreText.text = "Filings    " + ScoreTracker.scoreAmount;
         //scoreText.text = "Obj Spawn: " + SpawnObject.ObjectSpawnPicker;
     }
 }
