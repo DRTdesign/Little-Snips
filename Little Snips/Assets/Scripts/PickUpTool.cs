@@ -217,6 +217,9 @@ public class PickUpTool : MonoBehaviour
         {
             holdingAnyTool = false;
         }
+
+        // [ SHOW IN DEBUG WHAT RAYCAST IS HITTING ]
+        //print(hit.collider.gameObject.name);
     }
 
     void PickUpTool1(GameObject pickUpObj)
