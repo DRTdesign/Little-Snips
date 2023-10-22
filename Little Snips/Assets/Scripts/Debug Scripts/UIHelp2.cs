@@ -17,14 +17,14 @@ public class UIHelp2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (MainCamera.GetComponent<PickUpTool>().readyToPickUpTool2 == true)
+        if (MainCamera.GetComponent<PickUpTool>().readyToDropTool1 == true)
         {
-            helpText.text = "readyToPickUpTool2 = True";
+            helpText.text = "ReadyToDropTool1 = True";
         }
 
-        if (MainCamera.GetComponent<PickUpTool>().readyToPickUpTool2 != true)
+        if (MainCamera.GetComponent<PickUpTool>().readyToDropTool1 != true)
         {
-            helpText.text = "readyToPickUpTool2 = False";
+            helpText.text = "ReadyToDropTool1 = False";
         }
     }
 }

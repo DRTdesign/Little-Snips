@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PickUpTool : MonoBehaviour
@@ -10,29 +11,40 @@ public class PickUpTool : MonoBehaviour
     public Transform holdPosL1;
     public Transform holdPosL2;
     public Transform holdPosL3;
-    //public float throwForce = 500f; //force at which the object is thrown at
+    public Transform toolRestPlace1;
+    public Transform toolRestPlace2;
+    public Transform toolRestPlace3;
     public float pickUpRange = 20f; //how far the player can pickup the object from
-    //private float rotationSensitivity = 1f; //how fast/slow the object is rotated in relation to mouse movement
     private GameObject heldTool; //object which we pick up
     private Rigidbody heldToolRb; //rigidbody of object we pick up
-    public bool canDropL = true; //this is needed so we don't throw/drop object when rotating the object
     private int LayerNumber; //layer index
-    //private bool objectScaleDownReady = true;
     public GameObject tool1;
     public GameObject tool2;
     public GameObject tool3;
     public bool readyToPickUpTool1 = false;
     public bool readyToPickUpTool2 = false;
     public bool readyToPickUpTool3 = false;
+    public bool readyToDropTool1 = false;
+    public bool readyToDropTool2 = false;
+    public bool readyToDropTool3 = false;
     public bool holdingTool1 = false;
     public bool holdingTool2 = false;
     public bool holdingTool3 = false;
+    public bool holdingAnyTool = false;
 
     void Start()
     {
         //LayerNumber = LayerMask.NameToLayer("holdLayer"); //if your holdLayer is named differently make sure to change this ""
         //mouseLookScript = player.GetComponent<MouseLookScript>();
         anim = handL.GetComponent<Animator>();
+
+        //Setting All Tools To Their Resting Positions
+        tool1.transform.position = toolRestPlace1.transform.position;
+        tool1.transform.rotation = toolRestPlace1.transform.rotation;
+        tool2.transform.position = toolRestPlace2.transform.position;
+        tool2.transform.rotation = toolRestPlace2.transform.rotation;
+        tool3.transform.position = toolRestPlace3.transform.position;
+        tool3.transform.rotation = toolRestPlace3.transform.rotation;
     }
 
     void Update()
@@ -47,36 +59,18 @@ public class PickUpTool : MonoBehaviour
                 if (hit.transform.gameObject.name == "ToolSlot1")
                 {
                     readyToPickUpTool1 = true;
-
-                    if (Input.GetMouseButtonDown(0)) //Left mouse click
-                    {
-                        //pass in object hit into the PickUpObject function
-                        PickUpTool1(hit.transform.gameObject);
-                    }
                 }
 
                 //make sure pickup tag is attached
                 else if (hit.transform.gameObject.name == "ToolSlot2")
                 {
                     readyToPickUpTool2 = true;
-
-                    if (Input.GetMouseButtonDown(0)) //Left mouse click
-                    {
-                        //pass in object hit into the PickUpObject function
-                        PickUpTool2(hit.transform.gameObject);
-                    }
                 }
 
                 //make sure pickup tag is attached
                 else if (hit.transform.gameObject.name == "ToolSlot3")
                 {
                     readyToPickUpTool3 = true;
-
-                    if (Input.GetMouseButtonDown(0)) //Left mouse click
-                    {
-                        //pass in object hit into the PickUpObject function
-                        PickUpTool3(hit.transform.gameObject);
-                    }
                 }
 
                 else
@@ -93,23 +87,122 @@ public class PickUpTool : MonoBehaviour
                 readyToPickUpTool2 = false;
                 readyToPickUpTool3 = false;
             }
-        }
 
-        if (heldTool != null) //if player is holding object
-        {
-            heldTool.layer = LayerMask.NameToLayer("Ignore Raycast"); //change tool layer to avoid raycast issues
-            
-            MoveObject(); //keep object position at holdPosL
-
-            if (Input.GetMouseButtonDown(0) && canDropL == true)
+            if (heldTool != null) //if currently holding a tool...
             {
-                DropObject();
+                //make sure pickup tag is attached
+                if (hit.transform.gameObject.name == "ToolSlot1") //...and looking at tool slot 1...
+                {
+                    if (holdingTool1 == true) //...and holding Tool 1
+                    {
+                        readyToDropTool1 = true;
+                    }
+                }
+
+                //make sure pickup tag is attached
+                else if (hit.transform.gameObject.name == "ToolSlot2") //...and looking at tool slot 2...
+                {
+                    if (holdingTool2 == true)  //...and holding Tool 2
+                    {
+                        readyToDropTool2 = true;
+                    }
+                }
+
+                //make sure pickup tag is attached
+                else if (hit.transform.gameObject.name == "ToolSlot3") //...and looking at tool slot 3...
+                {
+                    if (holdingTool3 == true) //...and holding Tool 3
+                    {
+                        readyToDropTool3 = true;
+                    }
+                }
+
+                else
+                {
+                    readyToDropTool1 = false;
+                    readyToDropTool2 = false;
+                    readyToDropTool3 = false;
+                }
             }
 
-            //if (objectScaleDownReady == true)
-            //{
-            //    ScaleObjectDown();
-            //}
+            else
+            {
+                readyToDropTool1 = false;
+                readyToDropTool2 = false;
+                readyToDropTool3 = false;
+            }
+        }
+
+        // [ LEFT CLICK - Picking Up and Putting Down Tools ]
+
+        if (readyToPickUpTool1 == true) 
+        {
+            if (Input.GetMouseButtonDown(0)) //Left mouse click
+            {
+                //pass in object hit into the PickUpObject function
+                PickUpTool1(hit.transform.gameObject);
+            }
+        }
+
+        if (readyToDropTool1 == true)
+        {
+            if (Input.GetMouseButtonDown(0)) //Left mouse click
+            {
+                holdingTool1 = false;
+                DropTool1();
+            }
+        }
+
+        if (readyToPickUpTool2 == true)
+        {
+            if (Input.GetMouseButtonDown(0)) //Left mouse click
+            {
+                //pass in object hit into the PickUpObject function
+                PickUpTool2(hit.transform.gameObject);
+            }
+        }
+
+        if (readyToDropTool2 == true)
+        {
+            if (Input.GetMouseButtonDown(0)) //Left mouse click
+            {
+                holdingTool2 = false;
+                DropTool2();
+            }
+        }
+
+        if (readyToPickUpTool3 == true)
+        {
+            if (Input.GetMouseButtonDown(0)) //Left mouse click
+            {
+                //pass in object hit into the PickUpObject function
+                PickUpTool3(hit.transform.gameObject);
+            }
+        }
+
+        if (readyToDropTool3 == true)
+        {
+            if (Input.GetMouseButtonDown(0)) //Left mouse click
+            {
+                holdingTool3 = false;
+                DropTool3();
+            }
+        }
+
+        if (heldTool != null) //if player is holding a tool
+        {
+            holdingAnyTool = true;
+
+            if (readyToDropTool1 == false)
+            {
+                heldTool.layer = LayerMask.NameToLayer("Ignore Raycast"); //change tool layer to avoid raycast issues
+                MoveObject(); //keep object position at holdPosL
+            }
+        }
+
+        if (heldTool == null) //if player isn't holding a tool
+        {
+            holdingAnyTool = false;
         }
     }
 
@@ -118,9 +211,7 @@ public class PickUpTool : MonoBehaviour
         if (pickUpObj.GetComponent<Rigidbody>()) //make sure the object has a RigidBody
         {
             holdingTool1 = true;
-            canDropL = true;
             anim.SetTrigger("CloseHandL");
-            //heldTool = pickUpObj; //assign heldObj to the object that was hit by the raycast (no longer == null)
             heldTool = tool1; //assign heldObj to the object that was hit by the raycast (no longer == null)
             heldToolRb = tool1.GetComponent<Rigidbody>(); //assign Rigidbody
             heldToolRb.isKinematic = true;
@@ -136,9 +227,7 @@ public class PickUpTool : MonoBehaviour
         if (pickUpObj.GetComponent<Rigidbody>()) //make sure the object has a RigidBody
         {
             holdingTool2 = true;
-            canDropL = true;
             anim.SetTrigger("CloseHandL");
-            //heldTool = pickUpObj; //assign heldObj to the object that was hit by the raycast (no longer == null)
             heldTool = tool2; //assign heldObj to the object that was hit by the raycast (no longer == null)
             heldToolRb = tool2.GetComponent<Rigidbody>(); //assign Rigidbody
             heldToolRb.isKinematic = true;
@@ -154,9 +243,7 @@ public class PickUpTool : MonoBehaviour
         if (pickUpObj.GetComponent<Rigidbody>()) //make sure the object has a RigidBody
         {
             holdingTool3 = true;
-            canDropL = true;
             anim.SetTrigger("CloseHandL");
-            //heldTool = pickUpObj; //assign heldObj to the object that was hit by the raycast (no longer == null)
             heldTool = tool3; //assign heldObj to the object that was hit by the raycast (no longer == null)
             heldToolRb = tool3.GetComponent<Rigidbody>(); //assign Rigidbody
             heldToolRb.isKinematic = true;
@@ -167,23 +254,34 @@ public class PickUpTool : MonoBehaviour
         }
     }
 
-    void DropObject()
+    void DropTool1()
     {
-        if (this.GetComponent<HandPosition>().lookingAt == true)
-        {
-            holdingTool1 = false;
-            holdingTool2 = false;
-            holdingTool3 = false;
-            //re-enable collision with player
-            Physics.IgnoreCollision(heldTool.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
-            //heldObj.layer = 0; //object assigned back to default layer
-            heldToolRb.isKinematic = false;
-            heldTool.transform.parent = null; //unparent object
-            heldTool = null; //undefine game object
-            //objectScaleDownReady = true;
-            //ScaleObjectUp();
-            anim.SetTrigger("OpenHandL");
-        }
+        heldToolRb.isKinematic = false;
+        heldTool.transform.parent = null; //unparent object
+        heldTool = null; //undefine game object
+        tool1.transform.position = toolRestPlace1.transform.position;
+        tool1.transform.rotation = toolRestPlace1.transform.rotation;
+        anim.SetTrigger("OpenHandL");
+    }
+
+    void DropTool2()
+    {
+        heldToolRb.isKinematic = false;
+        heldTool.transform.parent = null; //unparent object
+        heldTool = null; //undefine game object
+        tool2.transform.position = toolRestPlace2.transform.position;
+        tool2.transform.rotation = toolRestPlace2.transform.rotation;
+        anim.SetTrigger("OpenHandL");
+    }
+
+    void DropTool3()
+    {
+        heldToolRb.isKinematic = false;
+        heldTool.transform.parent = null; //unparent object
+        heldTool = null; //undefine game object
+        tool3.transform.position = toolRestPlace3.transform.position;
+        tool3.transform.rotation = toolRestPlace3.transform.rotation;
+        anim.SetTrigger("OpenHandL");
     }
 
     void MoveObject()
@@ -195,46 +293,18 @@ public class PickUpTool : MonoBehaviour
             heldTool.transform.rotation = holdPosL1.transform.rotation;
         }
 
-        if (holdingTool2 == true)
+        else if (holdingTool2 == true)
         {
             //keep object position the same as the holdPosition position
             heldTool.transform.position = holdPosL2.transform.position;
-            heldTool.transform.rotation = holdPosL1.transform.rotation;
+            heldTool.transform.rotation = holdPosL2.transform.rotation;
         }
 
-        if (holdingTool3 == true)
+        else if (holdingTool3 == true)
         {
             //keep object position the same as the holdPosition position
             heldTool.transform.position = holdPosL3.transform.position;
-            heldTool.transform.rotation = holdPosL1.transform.rotation;
+            heldTool.transform.rotation = holdPosL3.transform.rotation;
         }
     }
-
-    //void ScaleObjectDown()
-    //{
-    //    heldObj.transform.localScale = (heldObj.transform.localScale) / 2;
-    //    objectScaleDownReady = false;
-    //}
-
-    //void ScaleObjectUp()
-    //{
-    //heldObj.transform.localScale = (heldObj.transform.localScale) * 2;
-    //objectScaleDownReady = true;
-    //}
-
-    //void StopClipping() //function only called when dropping/throwing
-    //{
-    //    var clipRange = Vector3.Distance(heldObj.transform.position, transform.position); //distance from holdPos to the camera
-    //    //have to use RaycastAll as object blocks raycast in center screen
-    //    //RaycastAll returns array of all colliders hit within the cliprange
-    //    RaycastHit[] hits;
-    //    hits = Physics.RaycastAll(transform.position, transform.TransformDirection(Vector3.forward), clipRange);
-    //    //if the array length is greater than 1, meaning it has hit more than just the object we are carrying
-    //    if (hits.Length > 1)
-    //    {
-    //        //change object position to camera position 
-    //        heldObj.transform.position = transform.position + new Vector3(0f, -0.5f, 0f); //offset slightly downward to stop object dropping above player 
-    //        //if your player is small, change the -0.5f to a smaller number (in magnitude) ie: -0.1f
-    //    }
-    //}
 }

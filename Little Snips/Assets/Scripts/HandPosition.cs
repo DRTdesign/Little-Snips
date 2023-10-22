@@ -16,11 +16,13 @@ public class HandPosition : MonoBehaviour
     public Transform boxPlaceHand1;
     public Transform boxPlaceHand2;
     public Transform boxPlaceHand3;
+    public Transform handReachPositionR;
 
     //Left hand positions and rotations
     public Transform handTool1GrabPosition;
     public Transform handTool2GrabPosition;
     public Transform handTool3GrabPosition;
+    public Transform handReachPositionL;
 
     public float lookAtRange = 5f; //how far the player can pickup the object from
     public bool lookingAt;
@@ -35,7 +37,6 @@ public class HandPosition : MonoBehaviour
     void Update()
     {
         RaycastHit hit;
-
         //Code for putting right hand over a box and for putting left hand over a tool
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, lookAtRange))
         {
@@ -105,13 +106,29 @@ public class HandPosition : MonoBehaviour
             leftHand.transform.rotation = handTool3GrabPosition.transform.rotation;
         }
 
-        //if not looking at any tools, put hand back to resting position
-        if (GameObject.Find("MainCamera").GetComponent<PickUpTool>().readyToPickUpTool1 == false
+        //if player is looking at tool slot while holding tool, hand indicates it can be put back
+        if (GameObject.Find("MainCamera").GetComponent<PickUpTool>().readyToDropTool1 
+            || GameObject.Find("MainCamera").GetComponent<PickUpTool>().readyToDropTool2 
+            || GameObject.Find("MainCamera").GetComponent<PickUpTool>().readyToDropTool3 == true)
+            {
+                leftHand.transform.position = handReachPositionL.transform.position;
+                leftHand.transform.rotation = handReachPositionL.transform.rotation;
+            }
+
+        //if not looking at any tool slots, put hand back to resting position
+        else if (GameObject.Find("MainCamera").GetComponent<PickUpTool>().readyToPickUpTool1 == false
             && GameObject.Find("MainCamera").GetComponent<PickUpTool>().readyToPickUpTool2 == false
             && GameObject.Find("MainCamera").GetComponent<PickUpTool>().readyToPickUpTool3 == false)
+            {
+                leftHand.transform.position = handRestPositionL.transform.position;
+                leftHand.transform.rotation = handRestPositionL.transform.rotation;
+            }
+
+        //if player is looking at spawn button and conditions are met to press it
+        if (GameObject.Find("MainCamera").GetComponent<PickUpObj>().spawnButtonLook == true)
         {
-            leftHand.transform.position = handRestPositionL.transform.position;
-            leftHand.transform.rotation = handRestPositionL.transform.rotation;
+            rightHand.transform.position = handReachPositionR.transform.position;
+            rightHand.transform.rotation = handReachPositionR.transform.rotation;
         }
     }
 

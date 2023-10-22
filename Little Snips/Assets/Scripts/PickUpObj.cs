@@ -67,6 +67,7 @@ public class PickUpObj : MonoBehaviour
         else
         {
             readyToPickUp = false;
+            spawnButtonLook = false;
 
             //if (canDropR == true)
             //{

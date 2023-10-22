@@ -32,7 +32,7 @@ public class SpawnObject : MonoBehaviour
         {
             if (ObjectSpawnPicker == 1)
             {
-                Instantiate(objectToSpawn1, new Vector3(0,2,5), transform.rotation);
+                Instantiate(objectToSpawn1, new Vector3(0.2f,2,5), transform.rotation);
                 spawn = false;
                 anim.SetTrigger("SpawnButtonPress");
             }
@@ -43,7 +43,7 @@ public class SpawnObject : MonoBehaviour
         {
             if (ObjectSpawnPicker == 2)
             {
-                Instantiate(objectToSpawn2, new Vector3(0, 2, 5), transform.rotation);
+                Instantiate(objectToSpawn2, new Vector3(0.2f, 2, 5), transform.rotation);
                 spawn = false;
                 anim.SetTrigger("SpawnButtonPress");
             }
@@ -53,7 +53,7 @@ public class SpawnObject : MonoBehaviour
         {
             if (ObjectSpawnPicker == 3)
             {
-                Instantiate(objectToSpawn3, new Vector3(0, 2, 5), transform.rotation);
+                Instantiate(objectToSpawn3, new Vector3(0.2f, 2, 5), transform.rotation);
                 spawn = false;
                 anim.SetTrigger("SpawnButtonPress");
             }

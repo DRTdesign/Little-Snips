@@ -17,14 +17,14 @@ public class UIHelp1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (MainCamera.GetComponent<PickUpTool>().readyToPickUpTool1 == true)
+        if (MainCamera.GetComponent<PickUpObj>().spawnButtonLook == true)
         {
-            helpText.text = "ReadyToPickUpTool = True";
+            helpText.text = "SpawnButtonLook = true";
         }
 
-        if (MainCamera.GetComponent<PickUpTool>().readyToPickUpTool1 != true)
+        if (MainCamera.GetComponent<PickUpObj>().spawnButtonLook != true)
         {
-            helpText.text = "ReadyToPickUpTool = False";
+            helpText.text = "SpawnButtonLook = false";
         }
     }
 }
