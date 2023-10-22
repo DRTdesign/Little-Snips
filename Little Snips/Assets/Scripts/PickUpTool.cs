@@ -78,6 +78,7 @@ public class PickUpTool : MonoBehaviour
                     readyToPickUpTool1 = false;
                     readyToPickUpTool2 = false;
                     readyToPickUpTool3 = false;
+                    anim.SetBool("GrabHandL", false);
                 }
             }
             
@@ -86,6 +87,7 @@ public class PickUpTool : MonoBehaviour
                 readyToPickUpTool1 = false;
                 readyToPickUpTool2 = false;
                 readyToPickUpTool3 = false;
+                anim.SetBool("GrabHandL", false);
             }
 
             if (heldTool != null) //if currently holding a tool...
@@ -135,8 +137,10 @@ public class PickUpTool : MonoBehaviour
 
         // [ LEFT CLICK - Picking Up and Putting Down Tools ]
 
-        if (readyToPickUpTool1 == true) 
+        if (readyToPickUpTool1 == true)
         {
+            anim.SetBool("GrabHandL", true);
+
             if (Input.GetMouseButtonDown(0)) //Left mouse click
             {
                 //pass in object hit into the PickUpObject function
@@ -155,6 +159,8 @@ public class PickUpTool : MonoBehaviour
 
         if (readyToPickUpTool2 == true)
         {
+            anim.SetBool("GrabHandL", true);
+
             if (Input.GetMouseButtonDown(0)) //Left mouse click
             {
                 //pass in object hit into the PickUpObject function
@@ -173,6 +179,8 @@ public class PickUpTool : MonoBehaviour
 
         if (readyToPickUpTool3 == true)
         {
+            anim.SetBool("GrabHandL", true);
+
             if (Input.GetMouseButtonDown(0)) //Left mouse click
             {
                 //pass in object hit into the PickUpObject function
@@ -188,6 +196,11 @@ public class PickUpTool : MonoBehaviour
                 DropTool3();
             }
         }
+
+        //else
+        //{
+        //    anim.SetBool("GrabHandL", false);
+        //}
 
         if (heldTool != null) //if player is holding a tool
         {

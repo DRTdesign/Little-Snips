@@ -57,6 +57,7 @@ public class PickUpObj : MonoBehaviour
             if (hit.transform.gameObject.tag == "spawner")
             {
                 spawnButtonLook = true;
+                anim.SetBool("PointHandR", true);
             }
             else
             {
@@ -68,6 +69,7 @@ public class PickUpObj : MonoBehaviour
         {
             readyToPickUp = false;
             spawnButtonLook = false;
+            anim.SetBool("PointHandR", false);
 
             //if (canDropR == true)
             //{
