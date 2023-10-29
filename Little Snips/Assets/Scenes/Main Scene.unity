@@ -2881,6 +2881,7 @@ MonoBehaviour:
   objectToSpawn2: {fileID: 2462537117283338638, guid: 4ed779f998ef5d64f85bd70e21b246b9, type: 3}
   objectToSpawn3: {fileID: 7050861468163849129, guid: f5e151cc42f09384cbec2ac99e3ec96a, type: 3}
   spawnButton: {fileID: 1354858062}
+  HandR: {fileID: 859094173}
 --- !u!4 &765976149
 Transform:
   m_ObjectHideFlags: 0
@@ -7332,7 +7333,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1951171550
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7530,7 +7531,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2098405668
 RectTransform:
   m_ObjectHideFlags: 0

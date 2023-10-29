@@ -6,15 +6,18 @@ public class SpawnObject : MonoBehaviour
 {
     public GameObject objectToSpawn1, objectToSpawn2, objectToSpawn3;
     public GameObject spawnButton;
+    public GameObject HandR;
     private bool canSpawn = true;
     public static bool objOnField;
     public static int ObjectSpawnPicker;
     private Animator anim;
+    private Animator animHandR;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = spawnButton.GetComponent<Animator>();
+        animHandR = HandR.GetComponent<Animator>();
         //fireObjectSpawn();
     }
 
@@ -71,6 +74,8 @@ public class SpawnObject : MonoBehaviour
 
     public void fireObjectSpawn()
     {
+        animHandR.SetTrigger("PointPressHandR");
+        animHandR.SetTrigger("PointPressHandR");
         canSpawn = true;
         objOnField = true;
         ObjectSpawnPicker = Random.Range(1, 4);

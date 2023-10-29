@@ -97,6 +97,11 @@ public class HandPosition : MonoBehaviour
             rightHand.transform.rotation = handObjGrabPosition.transform.rotation;
         }
 
+        else
+        {
+            handIsResting = true;
+        }
+
         //if player is looking at grabbable tool 1 and conditions are met to pick that tool up
         if (GameObject.Find("MainCamera").GetComponent<PickUpTool>().readyToPickUpTool1 == true)
         {
@@ -136,7 +141,6 @@ public class HandPosition : MonoBehaviour
             && GameObject.Find("MainCamera").GetComponent<PickUpTool>().readyToPickUpTool2 == false
             && GameObject.Find("MainCamera").GetComponent<PickUpTool>().readyToPickUpTool3 == false)
             {
-                handIsResting = false;
                 leftHand.transform.position = Vector3.MoveTowards(leftHand.transform.position, handRestPositionL.transform.position, moveSpeed); 
                 leftHand.transform.rotation = handRestPositionL.transform.rotation;
             }
