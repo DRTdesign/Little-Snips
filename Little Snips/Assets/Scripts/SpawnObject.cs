@@ -6,7 +6,8 @@ public class SpawnObject : MonoBehaviour
 {
     public GameObject objectToSpawn1, objectToSpawn2, objectToSpawn3;
     public GameObject spawnButton;
-    private bool spawn = true;
+    private bool canSpawn = true;
+    public static bool objOnField;
     public static int ObjectSpawnPicker;
     private Animator anim;
 
@@ -22,39 +23,47 @@ public class SpawnObject : MonoBehaviour
     {
         if (GameObject.Find("MainCamera").GetComponent<PickUpObj>().spawnButtonLook == true)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (objOnField == false)
             {
-                fireObjectSpawn();
-            }                        
+                if (Input.GetMouseButtonDown(0))
+                {
+                    fireObjectSpawn();
+                }
+            } 
         }
 
-        if (spawn==true)
+        if (canSpawn == true)
         {
             if (ObjectSpawnPicker == 1)
             {
                 Instantiate(objectToSpawn1, new Vector3(0,2,5), transform.rotation);
-                spawn = false;
+                canSpawn = false;
                 anim.SetTrigger("SpawnButtonPress");
+            }
+
+            if (objOnField == false)
+            {
+
             }
         }
 
 
-        if (spawn == true)
+        if (canSpawn == true)
         {
             if (ObjectSpawnPicker == 2)
             {
                 Instantiate(objectToSpawn2, new Vector3(0, 2, 5), transform.rotation);
-                spawn = false;
+                canSpawn = false;
                 anim.SetTrigger("SpawnButtonPress");
             }
         }
 
-        if (spawn == true)
+        if (canSpawn == true)
         {
             if (ObjectSpawnPicker == 3)
             {
                 Instantiate(objectToSpawn3, new Vector3(0, 2, 5), transform.rotation);
-                spawn = false;
+                canSpawn = false;
                 anim.SetTrigger("SpawnButtonPress");
             }
         }
@@ -62,7 +71,8 @@ public class SpawnObject : MonoBehaviour
 
     public void fireObjectSpawn()
     {
-        spawn = true;
+        canSpawn = true;
+        objOnField = true;
         ObjectSpawnPicker = Random.Range(1, 4);
         anim.SetTrigger("SpawnButtonPress");
     }

@@ -53,15 +53,30 @@ public class PickUpObj : MonoBehaviour
                 }
             }
 
+            else
+            {
+                readyToPickUp = false;
+            }
+
             //IF LOOKING AT SPAWN BUTTON  (FOR "SPAWN OBJECT" SCRIPT)
             if (hit.transform.gameObject.tag == "spawner")
             {
                 spawnButtonLook = true;
-                anim.SetBool("PointHandR", true);
+
+                if (SpawnObject.objOnField == false)
+                {
+                    anim.SetBool("PointHandR", true);
+                }
+
+                else
+                {
+                    anim.SetBool("PointHandR", false);
+                }
             }
             else
             {
                 spawnButtonLook = false;
+                anim.SetBool("PointHandR", false);
             }
         }
 
@@ -122,7 +137,7 @@ public class PickUpObj : MonoBehaviour
 
     void DropObject()
     {
-        if (this.GetComponent<HandPosition>().lookingAt == true)
+        if (this.GetComponent<HandPosition>().lookingAtBox == true)
         {
             holdingObj = false;
             //re-enable collision with player

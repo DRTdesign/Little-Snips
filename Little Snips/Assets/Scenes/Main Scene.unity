@@ -5221,7 +5221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b08d0651240fa4a863ea96d0696485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainCamera: {fileID: 1234532805}
+  ScriptHolder: {fileID: 1234532805}
 --- !u!1 &1499826346
 GameObject:
   m_ObjectHideFlags: 0
@@ -5791,7 +5791,9 @@ MonoBehaviour:
   handTool3GrabPosition: {fileID: 1054060144}
   handReachPositionL: {fileID: 1054060144}
   lookAtRange: 20
-  lookingAt: 0
+  lookingAtBox: 0
+  handIsResting: 1
+  speed: 5
 --- !u!114 &1572070081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6390,7 +6392,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1773234858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6649,7 +6651,7 @@ GameObject:
   - component: {fileID: 1824689508}
   - component: {fileID: 1824689507}
   - component: {fileID: 1824689506}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Wall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7330,7 +7332,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1951171550
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7362,7 +7364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c446ef6bbe3114a93615ba679c3642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainCamera: {fileID: 1234532805}
+  ScriptHolder: {fileID: 1234532805}
 --- !u!114 &1951171552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7528,7 +7530,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2098405668
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7560,7 +7562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3ab3caa2b9d1d24f80da48569ca77c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainCamera: {fileID: 1234532805}
+  ScriptHolder: {fileID: 1234532805}
 --- !u!114 &2098405670
 MonoBehaviour:
   m_ObjectHideFlags: 0

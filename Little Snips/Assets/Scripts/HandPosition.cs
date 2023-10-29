@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class HandPosition : MonoBehaviour
@@ -25,19 +26,24 @@ public class HandPosition : MonoBehaviour
     public Transform handReachPositionL;
 
     public float lookAtRange = 5f; //how far the player can pickup the object from
-    public bool lookingAt;
+    public bool lookingAtBox = false;
+    public bool handIsResting = true;
+    public float speed = 1.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        lookingAt = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        var moveSpeed = speed * Time.deltaTime;
+        var rotateSpeed = speed + Time.deltaTime;
+
+        // [ HAND POSITION WHILE LOOKING AT BOXES ]
         RaycastHit hit;
-        //Code for putting right hand over a box and for putting left hand over a tool
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, lookAtRange))
         {
             if (GameObject.Find("MainCamera").GetComponent<PickUpObj>().holdingObj == true)
@@ -45,64 +51,73 @@ public class HandPosition : MonoBehaviour
                 if (hit.transform.gameObject.tag == "boxLookAt1")
                 {
                     LookAtBox1(hit.transform.gameObject);
-                    lookingAt = true;
+                    lookingAtBox = true;
+                    rightHand.transform.position = Vector3.MoveTowards(rightHand.transform.position, boxPlaceHand1.transform.position, moveSpeed);
                 }
 
                 else if (hit.transform.gameObject.tag == "boxLookAt2")
                 {
                     LookAtBox2(hit.transform.gameObject);
-                    lookingAt = true;
+                    lookingAtBox = true;
+                    rightHand.transform.position = Vector3.MoveTowards(rightHand.transform.position, boxPlaceHand2.transform.position, moveSpeed);
                 }
 
                 else if (hit.transform.gameObject.tag == "boxLookAt3")
                 {
                     LookAtBox3(hit.transform.gameObject);
-                    lookingAt = true;
+                    lookingAtBox = true;
+                    rightHand.transform.position = Vector3.MoveTowards(rightHand.transform.position, boxPlaceHand3.transform.position, moveSpeed);
                 }
             }
 
             else
             {
-                lookingAt = false;
+                lookingAtBox = false;
             }
         }
 
         else
         {
-            lookingAt = false;
+            lookingAtBox = false;
         }
 
-        if (lookingAt == false)
+        //if player is not looking at anything interactable or doing anything that would cause their hand to move
+        if (handIsResting == true)
         {
-            rightHand.transform.position = handRestPositionR.transform.position;
-            rightHand.transform.rotation = handRestPositionR.transform.rotation;
+            //rightHand.transform.position = handRestPositionR.transform.position;
+            rightHand.transform.position = Vector3.MoveTowards(rightHand.transform.position, handRestPositionR.transform.position, moveSpeed);
+            rightHand.transform.rotation = Quaternion.Slerp(rightHand.transform.rotation, handRestPositionR.transform.rotation, rotateSpeed);
         }
 
         //if player is looking at grabbable object and conditions are met to pick that object up
         if (GameObject.Find("MainCamera").GetComponent<PickUpObj>().readyToPickUp == true)
         {
-            rightHand.transform.position = handObjGrabPosition.transform.position;
+            handIsResting = false;
+            rightHand.transform.position = Vector3.MoveTowards(rightHand.transform.position, handObjGrabPosition.transform.position, moveSpeed);
             rightHand.transform.rotation = handObjGrabPosition.transform.rotation;
         }
 
         //if player is looking at grabbable tool 1 and conditions are met to pick that tool up
         if (GameObject.Find("MainCamera").GetComponent<PickUpTool>().readyToPickUpTool1 == true)
         {
-            leftHand.transform.position = handTool1GrabPosition.transform.position;
+            handIsResting = false;
+            leftHand.transform.position = Vector3.MoveTowards(leftHand.transform.position, handTool1GrabPosition.transform.position, moveSpeed);
             leftHand.transform.rotation = handTool1GrabPosition.transform.rotation;
         }
 
         //if player is looking at grabbable tool 2 and conditions are met to pick that tool up
         if (GameObject.Find("MainCamera").GetComponent<PickUpTool>().readyToPickUpTool2 == true)
         {
-            leftHand.transform.position = handTool2GrabPosition.transform.position;
+            handIsResting = false;
+            leftHand.transform.position = Vector3.MoveTowards(leftHand.transform.position, handTool2GrabPosition.transform.position, moveSpeed);
             leftHand.transform.rotation = handTool2GrabPosition.transform.rotation;
         }
 
         //if player is looking at grabbable tool 3 and conditions are met to pick that tool up
         if (GameObject.Find("MainCamera").GetComponent<PickUpTool>().readyToPickUpTool3 == true)
         {
-            leftHand.transform.position = handTool3GrabPosition.transform.position;
+            handIsResting = false;
+            leftHand.transform.position = Vector3.MoveTowards(leftHand.transform.position, handTool3GrabPosition.transform.position, moveSpeed);
             leftHand.transform.rotation = handTool3GrabPosition.transform.rotation;
         }
 
@@ -111,7 +126,8 @@ public class HandPosition : MonoBehaviour
             || GameObject.Find("MainCamera").GetComponent<PickUpTool>().readyToDropTool2 
             || GameObject.Find("MainCamera").GetComponent<PickUpTool>().readyToDropTool3 == true)
             {
-                leftHand.transform.position = handReachPositionL.transform.position;
+                handIsResting = false;
+                leftHand.transform.position = Vector3.MoveTowards(leftHand.transform.position, handReachPositionL.transform.position, moveSpeed); 
                 leftHand.transform.rotation = handReachPositionL.transform.rotation;
             }
 
@@ -120,33 +136,36 @@ public class HandPosition : MonoBehaviour
             && GameObject.Find("MainCamera").GetComponent<PickUpTool>().readyToPickUpTool2 == false
             && GameObject.Find("MainCamera").GetComponent<PickUpTool>().readyToPickUpTool3 == false)
             {
-                leftHand.transform.position = handRestPositionL.transform.position;
+                handIsResting = false;
+                leftHand.transform.position = Vector3.MoveTowards(leftHand.transform.position, handRestPositionL.transform.position, moveSpeed); 
                 leftHand.transform.rotation = handRestPositionL.transform.rotation;
             }
 
         //if player is looking at spawn button and conditions are met to press it
-        if (GameObject.Find("MainCamera").GetComponent<PickUpObj>().spawnButtonLook == true)
+        if (GameObject.Find("MainCamera").GetComponent<PickUpObj>().spawnButtonLook == true
+            && SpawnObject.objOnField == false)
         {
-            rightHand.transform.position = handReachPositionR.transform.position;
+            handIsResting = false;
+            rightHand.transform.position = Vector3.MoveTowards(rightHand.transform.position, handReachPositionR.transform.position, moveSpeed); 
             rightHand.transform.rotation = handReachPositionR.transform.rotation;
         }
     }
 
     void LookAtBox1(GameObject pickUpObj)
     {
-        rightHand.transform.position = boxPlaceHand1.transform.position;
+        handIsResting = false;
         rightHand.transform.rotation = boxPlaceHand1.transform.rotation;
     }
 
     void LookAtBox2(GameObject pickUpObj)
     {
-        rightHand.transform.position = boxPlaceHand2.transform.position;
+        handIsResting = false;
         rightHand.transform.rotation = boxPlaceHand2.transform.rotation;
     }
 
     void LookAtBox3(GameObject pickUpObj)
     {
-        rightHand.transform.position = boxPlaceHand3.transform.position;
+        handIsResting = false;
         rightHand.transform.rotation = boxPlaceHand3.transform.rotation;
     }
 }

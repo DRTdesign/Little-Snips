@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIHelp1 : MonoBehaviour
 {
     private Text helpText;
-    public GameObject MainCamera;
+    public GameObject ScriptHolder;
 
     // Start is called before the first frame update
     void Start()
@@ -17,14 +17,14 @@ public class UIHelp1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (MainCamera.GetComponent<PickUpTool>().readyToPickUpTool1 == true)
+        if (ScriptHolder.GetComponent<HandPosition>().handIsResting == true)
         {
-            helpText.text = "readyToPickUpTool1 = true";
+            helpText.text = "handIsResting = true";
         }
 
-        if (MainCamera.GetComponent<PickUpTool>().readyToPickUpTool1 != true)
+        if (ScriptHolder.GetComponent<HandPosition>().handIsResting != true)
         {
-            helpText.text = "readyToPickUpTool1 = false";
+            helpText.text = "handIsResting = false";
         }
     }
 }
